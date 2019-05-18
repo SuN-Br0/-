@@ -1,0 +1,33 @@
+
+.wrapper {
+    width : 800px;
+    margin-left : 100px;
+}
+
+.label {
+    display : inline-block;
+    width : 40px;
+}
+
+.control_area {
+    height : auto;
+    width : 780px;
+    border : 1px solid black;
+    margin-bottom : 10px;
+    padding-left : 20px;
+    padding-top : 20px;
+    padding-bottom: 20px;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+    width: 40px;
+}
+
+input [type='range'] {
+    width : 150px;
+}
+
+.last {
+    margin-bottom : 30px; 
+}
