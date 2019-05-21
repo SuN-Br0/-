@@ -263,7 +263,7 @@ function program_code() {
         rise : false,
         fall : false,
 
-        jumpPosition : 0,
+        jumpCondition : false,
         jumpHeight : 3 + 1/8*display_part
     };
 
@@ -518,7 +518,6 @@ function program_code() {
                 ctx.fillStyle="#0000ff";
                 ctx.fillRect(player.x*scale, player.y*scale, player.r, player.r);
             ctx.fill();
-
         }
 
         function animationPlayer() {  // анонимно задается для удобства вызова requestAnimationFrame
@@ -528,15 +527,16 @@ function program_code() {
             if (player.x*scale < display_part/2*scale)  player.x += player.vx;
             else if (player.x*scale >= display_part/2*scale)    coords.x -= 4;
 
-            //if (player.y > 1/8*display_part) player.y -= 0.1; 
-
             drawMap();
             drawPlayer();
-
         }
 
         var playerJump = function() {
             //console.log('jump');
+
+            player.jumpCondition = true;
+
+           // console.log (jumpCondition);
 
             if ( player.rise === true && player.fall === false ) player.y += player.ay;
             else if ( player.fall === true && player.rise === false) player.y -= player.ay;
@@ -546,15 +546,18 @@ function program_code() {
                 player.rise = false;
                 player.fall = true;
             }
+            else {};
 
             timerID = requestAnimationFrame(playerJump);
 
             if (player.y <= 1/8*display_part) {
+
                 player.rise = false;
                 player.fall = false;
+                player.jumpCondition = false;
                 cancelAnimationFrame(timerID);
-            //    console.log('cancel');
             }
+            else {};
         }
 
         function keyDownScript(e) { // функция по нажатию клавиши
@@ -562,7 +565,9 @@ function program_code() {
             // основное игровое действие - прыжок - будем осуществлять на пробел
             // пауза пока не предусматривается
 
-            if (e.keyCode == 32) {
+            //console.log (jumpCondition);
+
+            if (e.keyCode == 32 && player.jumpCondition == false) {
                 player.rise = true;
                 playerJump();
             }    
