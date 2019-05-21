@@ -260,11 +260,11 @@ function program_code() {
 
         r : scale,           // размеры кубика
 
-        riseTimer : 0,
-        fallTimer : 0,
+        rise : false,
+        fall : false,
 
         jumpPosition : 0,
-        jumpHeight : 3
+        jumpHeight : 3 + 1/8*display_part
     };
 
 
@@ -528,34 +528,33 @@ function program_code() {
             if (player.x*scale < display_part/2*scale)  player.x += player.vx;
             else if (player.x*scale >= display_part/2*scale)    coords.x -= 4;
 
+            //if (player.y > 1/8*display_part) player.y -= 0.1; 
+
             drawMap();
             drawPlayer();
 
         }
 
-        function playerJump() {
+        var playerJump = function() {
+            //console.log('jump');
 
-            player.jumpPosition = 3;
+            if ( player.rise === true && player.fall === false ) player.y += player.ay;
+            else if ( player.fall === true && player.rise === false) player.y -= player.ay;
+            else {};
 
-            console.log('jump');
-
-            if ( player.y < player.jumpPosition + player.jumpHeight ) {
-                player.riseTimer += 0.1;
-                player.y = player.jumpPosition + player.ay*player.riseTimer*player.riseTimer/2;            
-            drawPlayer();
-
+            if ( player.y >= player.jumpHeight ) {
+                player.rise = false;
+                player.fall = true;
             }
 
-            else if ( player.y >= player.jumpPosition + player.jumpHeight ) {
-                player.fallTimer += 0.1;
-                player.y -= player.ay*player.fallTimer*player.fallTimer/2;
-            drawPlayer();
+            timerID = requestAnimationFrame(playerJump);
 
+            if (player.y <= 1/8*display_part) {
+                player.rise = false;
+                player.fall = false;
+                cancelAnimationFrame(timerID);
+            //    console.log('cancel');
             }
-
-            //animationPlayer();
-            player.riseTimer = 0;
-            player.fallTimer = 0;
         }
 
         function keyDownScript(e) { // функция по нажатию клавиши
@@ -563,7 +562,10 @@ function program_code() {
             // основное игровое действие - прыжок - будем осуществлять на пробел
             // пауза пока не предусматривается
 
-            if (e.keyCode == 32)    playerJump();
+            if (e.keyCode == 32) {
+                player.rise = true;
+                playerJump();
+            }    
         }
 
         var gameLoop = function() {
