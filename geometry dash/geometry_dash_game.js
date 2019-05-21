@@ -532,11 +532,7 @@ function program_code() {
         }
 
         var playerJump = function() {
-            //console.log('jump');
-
             player.jumpCondition = true;
-
-           // console.log (jumpCondition);
 
             if ( player.rise === true && player.fall === false ) player.y += player.ay;
             else if ( player.fall === true && player.rise === false) player.y -= player.ay;
@@ -551,7 +547,6 @@ function program_code() {
             timerID = requestAnimationFrame(playerJump);
 
             if (player.y <= 1/8*display_part) {
-
                 player.rise = false;
                 player.fall = false;
                 player.jumpCondition = false;
@@ -574,7 +569,6 @@ function program_code() {
         }
 
         var gameLoop = function() {
-            
             addEventListener ("keydown", keyDownScript);    // ожидаем события нажатия клавиши
             animationPlayer();
 
@@ -587,7 +581,6 @@ function program_code() {
 
         drawMap();
         gameLoop();
-
 }
 
 
