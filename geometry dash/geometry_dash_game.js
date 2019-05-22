@@ -17,7 +17,7 @@ function program_code() {
     var scale = width/display_part;     // единица масштаба для отрисовки  
     
     var map = {
-        x : 0 ,         // бу
+        x : 0 ,         
         x_shift : 0 , 
         vx : 5
     }; 
@@ -31,7 +31,7 @@ function program_code() {
         object : 'player',  // ключ - имя объекта
 
          x : 8 ,    y : 3 ,     // координаты
-        vx : 0.1 , vy : 0.22,   // скорости
+        vx : 0.1 , vy : 0.2,   // скорости
                    ay : 0.05 ,  // ускорение
 
         r : scale,           // размеры кубика
@@ -40,7 +40,7 @@ function program_code() {
         fall : false,   // флаг спуска
         jumpCondition : false,  // флаг прыжка
 
-        jumpHeight : 3 + bottom.height, // высота прыжка
+        jumpHeight : 2.5 + bottom.height, // высота прыжка
         jumpTimer : 0   // таймер для перерасчета скорости в прыжке
     };
 
@@ -511,6 +511,36 @@ function program_code() {
 // --------------------------------------------------------------------- ВСПОМОГАТЕЛЬНАЯ ЧАСТЬ КАРТЫ ------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        function setFloor(x , y, length, h) {   // пол (тупо прямоугольный блок)
+            ctx.beginPath();
+                ctx.fillStyle="#0000ff";
+
+                    // x,y - координаты левого нижнего угла - определяют сектор, с которого начнется отрисовка
+                    // length, h - длина и ширина блока - определяет количество занимаемых секторов
+                    // х расчитывается с поправкой на передвижение, у - с поправкой на существование пола
+                    
+                ctx.fillRect(x*scale + map.x, (display_part*1/8+y)*scale, length*scale, h*scale);
+            ctx.fill();            
+        }
+
+        function setSpike(x,y) {    // шип (треугольничек)
+            
+            ctx.beginPath();
+            ctx.fillStyle="#00ff00";
+
+                // шип рисуется по принципу многоугольника
+                // х и у определяют сектор, в котором отрисуется шип
+                // далее просто отрисовывается равнобедренный треугольник в заданном секторе
+
+                ctx.lineTo( x*scale  + map.x, (y+display_part*1/8)*scale );
+                ctx.lineTo( (x+0.5)*scale + map.x, (y+display_part*1/8 +1)*scale );
+                ctx.lineTo( (x+1)*scale + map.x, (y+display_part*1/8)*scale );
+            ctx.closePath();
+            ctx.fill();
+        }
+
+
+
         function drawMap() {
             ctx.clearRect(0,0,width,height);    // первичная очистка       
 
@@ -529,6 +559,13 @@ function program_code() {
                     ctx.lineTo(width, j*scale);
                 ctx.stroke();
             }
+
+    //        setFloor(30, 0, 10, 1);
+            
+        setSpike(30,0);
+        setSpike(31,0);
+        setSpike(32,0);
+
 
             // отрисовка абсолютного пола, потолка и стенки - границы карты
 
