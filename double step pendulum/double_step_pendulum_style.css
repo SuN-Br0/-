@@ -1,7 +1,16 @@
 
+body {
+    background : #1A1A1A;
+}
+
 .wrapper {
     width : 800px;
-    margin-left : 100px;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.control_area {
+    background: #FFF;
 }
 
 .label {
@@ -30,4 +39,17 @@ input [type='range'] {
 
 .last {
     margin-bottom : 30px; 
+}
+
+#pendulum {
+    background: #FFF;
+
+}
+
+#XY_monitoring {
+    background: #FFF;
+}
+
+.aaa {
+    color :  #FFF;
 }

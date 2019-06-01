@@ -2,7 +2,6 @@
 window.addEventListener("load", program_code, false);
 
 function program_code() 
-
 {
     var ctx       = pendulum.getContext("2d"); // на контексте происходит рисование
     var ctx_graph = XY_monitoring.getContext("2d");
@@ -16,7 +15,7 @@ function program_code()
     // перенесем систему координат в новую точку
     ctx.translate(width/2 , height/10);
     ctx_graph.translate(10 , height_graph/2);
-    ctx_graph.scale(1 , -1);  // для построения графика удобнее использовать привысную ориентацию осей координат
+    ctx_graph.scale(1 , -1);  // для построения графика удобнее использовать привычную ориентацию осей координат
     
     // задаем константу g
     const g = 9.80665;
@@ -224,8 +223,6 @@ function program_code()
         draw_graph();
         coords_Q1.shift();
         coords_Q2.shift();        
-
-      //  app_control_panel();
     }
 
     function first_frame_draw() {
@@ -261,7 +258,7 @@ function program_code()
             document.getElementById("slider_input_m2").setAttribute("disabled","disabled");
             document.getElementById("slider_input_start_1").setAttribute("disabled","disabled");
             document.getElementById("slider_input_start_2").setAttribute("disabled","disabled");
-            
+             
             clearInterval(timer_static); // сброс функции, которая отрисовывает начальное положение
             timer_dynamic = setInterval(setup,1000/fps); // запуск функции, управляющей всеми частями программы, 60 раз в секунду
             key++; 

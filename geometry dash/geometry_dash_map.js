@@ -219,7 +219,7 @@ function program_code()
                 // х,у - определяют сектор, в котором отрисуется ступенька
                 // х расчитывается с поправкой на передвижение, у - с поправкой на существование пола и особенностей отрисовки
 
-                ctx.fillRect(x*scale + coords.x, (y+display_part*1/8)*scale - scale/3, scale, scale/3);
+                ctx.fillRect(x*scale + coords.x, (y+display_part*1/8)*scale - scale/2, scale, scale/2);
             ctx.fill();
         }
 
